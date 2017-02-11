@@ -4,7 +4,6 @@ var contributors = require("./src/main/community/contributors.js");
 var contributorsGen = require("./src/generated/community/contributors-gen.js");
 var Crawler = require("simplecrawler");
 var decompress = require("gulp-decompress");
-var del = require("del");
 var flatten = require("gulp-flatten");
 var fs = require("fs");
 var generateDistributionInfo = require("./src/main/tasks/generate-distribution-info.js");
@@ -541,8 +540,9 @@ gulp.task("update-contributors", function() {
 });
 
 // clean target directory
-gulp.task("clean", function(cb) {
-  del([paths.site], cb);
+gulp.task("clean", function() {
+  gutil.log(gutil.colors.red("This task is deprecated and does not do anything anymore."));
+  gutil.log(gutil.colors.red("Use `mvn clean` instead."));
 });
 
 // default task
