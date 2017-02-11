@@ -39,7 +39,7 @@ function collector(github, collect, done) {
  */
 function getRepos(org, github, done) {
   var result = [];
-  github.repos.getFromOrg({ org: org }, collector(github, function(e) {
+  github.repos.getForOrg({ org: org }, collector(github, function(e) {
     result.push(org + "/" + e.name);
   }, function(err) {
     if (err) {
@@ -89,7 +89,7 @@ function getAllRepos(orgs, github, done) {
  */
 function getContributors(org, repo, github, done) {
   var result = [];
-  github.repos.getContributors({ user: org, repo: repo }, collector(github, function(e) {
+  github.repos.getContributors({ owner: org, repo: repo }, collector(github, function(e) {
     result.push({
       login: e.login,
       contributions: e.contributions || 0
@@ -158,7 +158,7 @@ function getAllContributors(repos, github, done) {
  * Get details for a given user
  */
 function getUserDetails(user, github, done) {
-  github.user.getFrom({ user: user }, function(err, data) {
+  github.users.getForUser({ username: user }, function(err, data) {
     if (err) {
       done(err);
       return;
@@ -251,7 +251,7 @@ function getAll(github, done) {
 }
 
 module.exports = function(client_id, client_secret) {
-  var github = new GitHubApi({ version: "3.0.0" });
+  var github = new GitHubApi();
 
   if (client_id && client_secret) {
     github.authenticate({

@@ -191,7 +191,11 @@ function build(done, dev) {
     ]))
 
     // compress css
-    .use(cleanCSS())
+    .use(cleanCSS({
+      cleanCSS: {
+        rebase: false
+      }
+    }))
 
     // autoprefix css
     .use(autoprefixer())
@@ -476,7 +480,7 @@ gulp.task("check-links", ["site-dev"], function(done) {
   var app = startDevServer(function() {
     gutil.log("Crawling site for broken links ...");
     var broken = 0;
-    var crawler = Crawler.crawl(siteUrlDev)
+    var crawler = new Crawler(siteUrlDev)
     crawler.parseScriptTags = false;
     crawler.interval = 10;
     crawler.addFetchCondition(function(parsedURL) {
@@ -511,6 +515,7 @@ gulp.task("check-links", ["site-dev"], function(done) {
         }
         done();
       });
+    crawler.start();
   });
 });
 
